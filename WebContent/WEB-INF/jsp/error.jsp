@@ -8,5 +8,14 @@
 </head>
 <body>
 	Ho
+	
+	<%-- 
+	1. Create new branch
+	2. Commit your independent code
+	3. Push to github
+	4. Compare and merge
+	5. Merge (Supervisor merge)
+	6. Checkout to master on local and pull
+	 --%>
 </body>
 </html>
