@@ -1,11 +1,17 @@
 package com.raos.ecommerce.web.models;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,9 +23,13 @@ public class Cart {
 	private int id;
 	@OneToOne
 	private User user;
-	@OneToMany
-	private List<Product> products = new LinkedList<Product>();
-
+	
+	@ElementCollection
+    @MapKeyColumn(name="product_id")
+    @Column(name="quantity")
+    @CollectionTable(name="cart_details")
+	private Map<Product, Integer> products = new HashMap<Product, Integer>();
+	
 	public Cart() {
 	}
 
@@ -39,11 +49,11 @@ public class Cart {
 		this.user = user;
 	}
 
-	public List<Product> getProducts() {
+	public Map<Product, Integer> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(Map<Product, Integer> products) {
 		this.products = products;
 	}
 

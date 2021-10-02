@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.raos.ecommerce.web.dao.CartDAO;
+import com.raos.ecommerce.web.dao.ProductDAO;
 import com.raos.ecommerce.web.dao.UserDAO;
+import com.raos.ecommerce.web.models.Cart;
+import com.raos.ecommerce.web.models.Product;
 import com.raos.ecommerce.web.models.User;
 import com.raos.ecommerce.web.util.DispatchHelper;
 import com.raos.ecommerce.web.util.EncryptHelper;
@@ -36,6 +40,7 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		HttpSession session = ((HttpServletRequest) request).getSession(false);
 		if (session != null && session.getAttribute("user") != null) {
 			((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath());
@@ -84,6 +89,19 @@ public class LoginController extends HttpServlet {
 			DispatchHelper.dispatch("/WEB-INF/jsp/login.jsp", request, response);
 			return;
 		}
+		
+
+		CartDAO cdao = new CartDAO();
+		ProductDAO pdao = new ProductDAO();
+		
+		
+		Cart cart = new Cart();
+		cart.getProducts().put(pdao.load("0dff5dc5-84eb-44be-882b-4f18eafb7921"), 1);
+		cart.setUser(user);
+		cdao.save(cart);
+		
+		pdao.close();
+		cdao.close();
 
 		HttpSession session = request.getSession(true);
 		session.setAttribute("user", user);
