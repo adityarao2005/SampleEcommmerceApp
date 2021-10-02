@@ -137,6 +137,16 @@
 										<small class="form-text text-muted">Price of product</small>
 									</div>
 								</div>
+								<div class="row custom-file">
+									<div class="col col-md-3">
+										<label class=" form-control-label">Image</label>
+									</div>
+									<div class="col-12 col-md-9">
+										<input type="file" class="custom-file-input" name="img"
+											id="customFile"> <label class="custom-file-label"
+											for="customFile">Choose file</label>
+									</div>
+								</div>
 								<div class="row form-group">
 									<div class="col col-md-3">
 										<label for="description" class=" form-control-label">Description</label>
@@ -163,7 +173,7 @@
 
 	<jsp:include page="scripts.jsp"></jsp:include>
 	<script>
-		/* $("#create-product")
+		$("#create-product")
 				.validate(
 						{
 							rules : {
@@ -181,7 +191,10 @@
 										.ajax({
 											type : $(form).attr('method'),
 											url : $(form).attr('action'),
-											data : $(form).serialize(),
+											data : new FormData(form),
+											processData : false,
+											contentType : false,
+											enctype : 'multipart/form-data',
 											success : function() {
 												updateData();
 												$(".modal:visible").modal(
@@ -202,7 +215,7 @@
 											}
 										});
 							}
-						}); */
+						});
 		function updateData() {
 			$.ajax({
 				type : "post",
@@ -227,11 +240,44 @@
 
 		// TODO: do this only on Create/Update/Delete operation
 		$(function() {
-
+			$(".custom-file-input").on(
+					"change",
+					function() {
+						var fileName = $(this).val().split("\\").pop();
+						$(this).siblings(".custom-file-label").addClass(
+								"selected").html(fileName);
+					});
+			$("#products_container").on("click", ".delete", function () {
+				var id = $(this).parent().parent().attr("id");
+				$.confirm({
+					title : 'Do you really want to delete this product?',
+					content : 'Do you really want to delete this product?',
+					type : 'red',
+					buttons : {
+						ok : {
+							text : "Yes",
+							btnClass : 'btn-primary',
+							keys : [ 'enter' ],
+							action : function() {
+								$.ajax({
+									type : "post",
+									url : "product/delete/" + id,
+									success : function(xhr) {
+										updateData();
+									}
+								});
+							}
+						},
+						cancel : {
+							text : "No",
+						}
+					}
+				});
+			});
 			$('#products_container')
 					.on(
 							"dblclick",
-							'td',
+							'td.editable',
 							function() {
 								var originalContent = $(this).text();
 								var id = $(this).parent().attr("id");
@@ -245,8 +291,41 @@
 									var val = $(this).val();
 
 									$(this).parent().removeClass("cell-edit");
+
+									var data = (function(pbj) {
+										if (pbj.hasClass("p-name")) {
+											return "name";
+										}
+										if (pbj.hasClass("p-desc")) {
+											return "description";
+										}
+										if (pbj.hasClass("p-pr")) {
+											if (Number(pbj.val()) == NaN) {
+												return null;
+											}
+											return "price";
+										}
+										if (pbj.hasClass("p-no")) {
+											return "numberInStock";
+											if (Number(pbj.val()) == NaN) {
+												return null;
+											}
+										}
+										return null;
+									})($(this).parent());
+									if (data == null) {
+										alert("An error has occurred");
+										return;
+									}
 									$(this).parent().text($(this).val());
+
 									// TODO: Save edit value in the database using ajax
+									$.ajax({
+										url : "product/update/" + id,
+										type : "post",
+										data : data + "=" + val,
+										success : updateData
+									});
 								});
 
 							});

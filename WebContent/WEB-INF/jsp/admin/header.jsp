@@ -33,7 +33,7 @@
 							</div>
 							<div class="content">
 								<a
-									class="${pageContext.request.contextPath}/resources/js-acc-btn"
+									class="js-acc-btn"
 									href="#">john doe</a>
 							</div>
 							<div class="account-dropdown js-dropdown">
@@ -66,7 +66,7 @@
 									</div>
 								</div>
 								<div class="account-dropdown__footer">
-									<a href="#"> <i class="zmdi zmdi-power"></i>Logout
+									<a href="${pageContext.request.contextPath}/logout"> <i class="zmdi zmdi-power"></i>Logout
 									</a>
 								</div>
 							</div>

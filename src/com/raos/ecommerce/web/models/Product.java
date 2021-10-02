@@ -37,6 +37,8 @@ public class Product {
 	@Column(name = "number_in_stock")
 	private long numberInStock;
 	
+	private String image;
+	
 	// TODO: one to many review, if sql likes maps or hibernate has a mapping for it
 	
 	// TODO: many to many orders
@@ -79,6 +81,14 @@ public class Product {
 
 	public void setProductID(String productID) {
 		this.productID = productID;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 //	public boolean isArchived() {

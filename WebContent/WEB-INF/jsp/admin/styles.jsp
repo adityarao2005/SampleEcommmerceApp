@@ -45,4 +45,4 @@
 <!-- Main CSS-->
 <link href="${pageContext.request.contextPath}/resources/css/theme.css"
 	rel="stylesheet" media="all">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">

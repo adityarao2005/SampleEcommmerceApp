@@ -1,22 +1,17 @@
 package com.raos.ecommerce.web.util;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+
+import com.raos.ecommerce.web.listener.AppListener;
 
 public final class DBConnection {
-	private static final SessionFactory factory;
-	
-	static {
-		factory = new Configuration().configure().buildSessionFactory();
-	}
 	
 	private DBConnection() {
 		
 	}
 	
 	public static Session newSession() {
-		return factory.openSession();
+		return AppListener.getAppListener().getSessionFactory().openSession();
 	}
 
 }

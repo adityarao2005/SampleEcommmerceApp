@@ -3,7 +3,6 @@ package com.raos.ecommerce.web.controller.auth;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +30,6 @@ public class RegisterController extends HttpServlet {
 	 */
 	public RegisterController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -85,11 +83,11 @@ public class RegisterController extends HttpServlet {
 		user.setPassword(EncryptHelper.encrypt(password));
 
 		userDao.save(user);
+		userDao.close();
 
 		String fullContextPath = UrlHelpers.toURL(request.getScheme(), request.getServerName(), request.getServerPort(),
 				request.getContextPath());
-		UUID uuid = user.getToken();
-		String token = uuid.toString();
+		String token = user.getToken();
 		String verificationLink = fullContextPath + "/email/verification/" + token;
 
 		MailService mailService = new MailService();
@@ -107,7 +105,7 @@ public class RegisterController extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("user", user);
 
-		response.sendRedirect(request.getContextPath());
+		DispatchHelper.dispatch("/WEB-INF/jsp/verification.jsp", request, response);
 	}
 
 }

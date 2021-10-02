@@ -40,6 +40,11 @@ public class ListProductsController extends HttpServlet {
 		List<Product> products = dao.getProducts(10, page);
 		long rows = dao.getNumberOfRows();
 		int lastPageNumber = (int) (Math.ceil((double)rows / 10));
+		products.forEach(e -> {
+			if (e.getImage() == null || e.getImage().trim().isEmpty()) {
+				e.setImage(request.getContextPath() + "/resources/images/default_image.jpg");
+			}
+		});
 		dao.close();
 		
 		request.setAttribute("products", products);

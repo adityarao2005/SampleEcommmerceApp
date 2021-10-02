@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.raos.ecommerce.web.dao.ProductDAO;
 import com.raos.ecommerce.web.models.Product;
+import com.raos.ecommerce.web.util.MultipartHelpers;
 
 /**
  * Servlet implementation class CreateProductController
  */
 @WebServlet("/admin/product")
+@MultipartConfig
 public class CreateProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +41,8 @@ public class CreateProductController extends HttpServlet {
 		String name = request.getParameter("name");
 		String price = request.getParameter("price");
 		String description = request.getParameter("description");
+		String image = MultipartHelpers.saveMultipartData(request, response, "img");
+		
 		double cost = 0;
 		if (name == null || name.trim().isEmpty()) {
 			errors.add("Name is empty");
@@ -63,6 +68,7 @@ public class CreateProductController extends HttpServlet {
 			product.setDescription(description);
 			product.setNumberInStock(0);
 			product.setPrice(cost);
+			product.setImage(image);
 
 			ProductDAO dao = new ProductDAO();
 			dao.save(product);

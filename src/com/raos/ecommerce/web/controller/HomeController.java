@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.raos.ecommerce.web.models.User;
 import com.raos.ecommerce.web.util.DispatchHelper;
 
 /**
@@ -31,14 +32,16 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		boolean isAuth = true;
 		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("user") == null) {
-			isAuth = false;
+		User user = null;
+		if (session != null && (user = (User) session.getAttribute("user")) != null) {
+			if (user.isAdmin()) {
+				response.sendRedirect("admin");
+				return;
+			}
 		}
-
-		request.setAttribute("auth", isAuth);
 		DispatchHelper.dispatch("/WEB-INF/jsp/index.jsp", request, response);
+
 	}
 
 }

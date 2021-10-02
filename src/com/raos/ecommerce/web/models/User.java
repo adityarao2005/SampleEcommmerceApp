@@ -17,14 +17,17 @@ public class User implements Serializable {
 	@GeneratedValue
 	private int id;
 	@Type(type = "text")
-	private UUID token;
+	private String token;
 	private String email;
 	private String password;
 	private boolean active;
+	@OneToOne
+	private Cart cart;
+	private boolean admin;
 	
 	@PrePersist @PreUpdate
 	public void initUUID() {
-		token = UUID.randomUUID();
+		token = UUID.randomUUID().toString();
 	}
 
 	public int getId() {
@@ -52,11 +55,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public UUID getToken() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setToken(UUID token) {
+	public void setToken(String token) {
 		this.token = token;
 	}
 
@@ -67,4 +70,21 @@ public class User implements Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
 }

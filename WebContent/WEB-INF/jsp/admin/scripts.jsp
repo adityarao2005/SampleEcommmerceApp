@@ -5,7 +5,8 @@
 	src="${pageContext.request.contextPath}/resources/vendor/jquery-3.2.1.min.js"></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.js"></script>
 <!-- Bootstrap JS-->
 <script
 	src="${pageContext.request.contextPath}/resources/vendor/bootstrap-4.1/popper.min.js"></script>
@@ -40,6 +41,10 @@
 	src="${pageContext.request.contextPath}/resources/vendor/select2/select2.min.js">
 	
 </script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.js"></script>
 
 <!-- Main JS-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>

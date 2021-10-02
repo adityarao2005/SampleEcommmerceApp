@@ -4,55 +4,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="admin/styles.jsp"></jsp:include>
 </head>
-<body>
-	<h1>Register</h1>
-	<div class="container">
-		<div class="col-6 m-auto">
-			<c:if test="${errors.size() > 0}">
-				<h2>Errors</h2>
-				<c:forEach var="error" items="${errors}">
-					<div class="alert alert-danger alert-dismissible fade show">
-						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<strong>Error:</strong> ${error}
-					</div>
-				</c:forEach>
-			</c:if>
-			<form method="POST">
-				<div class="form-group">
-					<label for="email">Email address:</label> <input name="email"
-						id="email" type="email" class="form-control"
-						placeholder="Enter email">
-				</div>
-				<div class="form-group">
-					<label for="password">Password:</label> <input type="password"
-						class="form-control" placeholder="Enter password" id="password"
-						name="password">
-				</div>
-				<button id="verify-email" type="button" class="btn btn-secondary">Verify</button>
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
+<body class="animsition">
+	<div class="page-wrapper">
+		<div class="page-content--bge5">
+			<div class="container">
+				<div class="login-wrap">
+					<div class="login-content">
+						<div class="login-logo">
+							<a href="#"> <img src="resources/images/icon/logo.png" alt="CoolAdmin">
+							</a>
+						</div>
 
+						<c:if test="${errors.size() > 0}">
+							<h2>Errors</h2>
+							<c:forEach var="error" items="${errors}">
+								<div class="alert alert-danger alert-dismissible fade show">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<strong>Error:</strong> ${error}
+								</div>
+							</c:forEach>
+						</c:if>
+
+						<!-- TODO: Use CoolAdmin for styles -->
+
+						<div class="login-form">
+							<form action="" method="post">
+								<div class="form-group">
+									<label>Email Address</label> <input
+										class="au-input au-input--full" type="email" name="email"
+										placeholder="Email">
+								</div>
+								<div class="form-group">
+									<label>Password</label> <input class="au-input au-input--full"
+										type="password" name="password" placeholder="Password">
+								</div>
+								<button class="au-btn au-btn--block au-btn--green m-b-20"
+									type="submit">Register</button>
+								<!-- <div class="social-login-content">
+									<div class="social-button">
+										<button class="au-btn au-btn--block au-btn--blue m-b-20">sign
+											in with facebook</button>
+										<button class="au-btn au-btn--block au-btn--blue2">sign
+											in with twitter</button>
+									</div>
+								</div> -->
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+
 	</div>
+
+	<jsp:include page="admin/scripts.jsp"></jsp:include>
 	<script>
 		$(function() {
-			$("#verify-email").click(function(event) {
-				var email = $("#email").val();
-				event.preventDefault();
-				$.ajax({
-					url : "verify-email-exists",
-					type : "get",
-					data : "email=" + email,
-					success : function(response) {
-						console.log('Unique email');
-					},
-					error : function(textStatus, error) {
-					}
-
-				});
-			});
 			$("form").validate({
 				rules : {
 					email : {
