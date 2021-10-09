@@ -62,7 +62,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="${pageContext.request.contextPath}">Home</a></li>
 						<li class="active"><a href="${pageContext.request.contextPath}/shop">Shop page</a></li>
-						<li><a href="cart.html">Cart</a></li>
+						<li><a href="cart">Cart</a></li>
 						<li><a href="checkout.html">Checkout</a></li>
 						<li><a href="#">Category</a></li>
 						<li><a href="#">Others</a></li>
@@ -110,8 +110,7 @@
 
 							<div class="product-option-shop">
 								<a class="add_to_cart_button" data-quantity="1"
-									data-product_sku="" data-product_id="70" rel="nofollow"
-									href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+									data-product_sku="" data-product_id="70" rel="nofollow" onclick="addProduct('${product.productID}')">Add to cart</a>
 							</div>
 						</div>
 					</div>
@@ -290,5 +289,21 @@
 	</div>
 
 	<jsp:include page="include/scripts.jsp"></jsp:include>
+	
+	<script>
+		function addProduct(productID) {
+			$.ajax({
+				url : "${pageContext.request.contextPath}/cart",
+				type : "post",
+				data : "product_id" + "=" + productID,
+				success : function () {
+					alert("success");
+				},
+				error: function () {
+					alert("error");
+				}
+			});
+		}
+	</script>
 </body>
 </html>

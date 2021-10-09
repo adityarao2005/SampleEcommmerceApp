@@ -16,10 +16,12 @@ public class CartDAO extends DAO<Cart> {
 		Objects.requireNonNull(product);
 		// Add the product to the cart if not existing already
 		Cart cart = user.getCart();
+		System.out.println(cart);
 		if (cart == null) {
 			user.setCart(cart = new Cart());
 			cart.getProducts().put(product, 1);
 		} else if (cart.getProducts().get(product) != null) {
+			System.out.println("1");
 			cart.getProducts().put(product, cart.getProducts().get(product) + 1);
 		} else {
 			cart.getProducts().put(product, 1);

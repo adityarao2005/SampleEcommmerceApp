@@ -59,7 +59,7 @@
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="shop">Shop page</a></li>
-						<li><a href="cart.html">Cart</a></li>
+						<li><a href="cart">Cart</a></li>
 						<li><a href="checkout.html">Checkout</a></li>
 						<li><a href="#">Category</a></li>
 						<li><a href="#">Others</a></li>

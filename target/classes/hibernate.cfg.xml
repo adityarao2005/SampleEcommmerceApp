@@ -13,6 +13,6 @@
 		<property name="hbm2ddl.auto">update</property>
 		<mapping class="com.raos.ecommerce.web.models.User"/>
 		<mapping class="com.raos.ecommerce.web.models.Product"/>
-		<mapping class="com.raos.ecommerce.web.models.Cart"/>
+ 		<mapping class="com.raos.ecommerce.web.models.Cart"/>
 	</session-factory>
 </hibernate-configuration>

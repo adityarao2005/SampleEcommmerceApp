@@ -21,6 +21,7 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private boolean active;
+//	@Embedded
 	@OneToOne
 	private Cart cart;
 	private boolean admin;
