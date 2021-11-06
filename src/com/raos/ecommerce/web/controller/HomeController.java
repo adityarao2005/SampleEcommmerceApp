@@ -40,6 +40,8 @@ public class HomeController extends HttpServlet {
 				return;
 			}
 		}
+		if (user != null)
+			System.out.println(user.getCart());
 		DispatchHelper.dispatch("/WEB-INF/jsp/index.jsp", request, response);
 
 	}

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "email", "token" }) })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 @NamedQuery(name = "User.findAll", query = "from User")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,7 +16,6 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Type(type = "text")
 	private String token;
 	private String email;
 	private String password;

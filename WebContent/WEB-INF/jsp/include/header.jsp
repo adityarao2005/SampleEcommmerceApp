@@ -14,9 +14,9 @@
 								<li><a href="${pageContext.request.contextPath}/logout"><i
 										class="fa fa-sign-out"></i>Logout</a></li>
 							</c:when>
-
 							<c:otherwise>
-								<li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-user"></i> Login</a></li>
+								<li><a href="${pageContext.request.contextPath}/login"><i
+										class="fa fa-user"></i> Login</a></li>
 							</c:otherwise>
 						</c:choose>
 						<li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>

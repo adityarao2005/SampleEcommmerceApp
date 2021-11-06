@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.raos.ecommerce.web.dao.CartDAO;
 import com.raos.ecommerce.web.dao.ProductDAO;
+import com.raos.ecommerce.web.dao.UserDAO;
 import com.raos.ecommerce.web.models.Cart;
 import com.raos.ecommerce.web.models.Product;
 import com.raos.ecommerce.web.models.User;
@@ -35,7 +37,20 @@ public class CartController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		HttpSession session = request.getSession(false);
+		User user = null;
+		Cart cart = null;
+		if (session != null && (user = (User) session.getAttribute("user")) != null) {
+			UserDAO userDao = new UserDAO();
+			user = userDao.load(user.getId());
+			userDao.close();
+			if (user.getCart() != null) {
+				CartDAO cartDao = new CartDAO();
+				cart = cartDao.load(user.getCart().getId());
+				cartDao.close();
+			}
+		}
+		request.setAttribute("cart", cart);
 		DispatchHelper.dispatch("/WEB-INF/jsp/cart.jsp", request, response);
 	}
 
@@ -56,10 +71,12 @@ public class CartController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		User user = null;
 		if (session != null && (user = (User) session.getAttribute("user")) != null) {
-//			CartDAO cartDao = new CartDAO();
-//			cartDao.addToCart(product, user);
-//			cartDao.close();
-			System.out.println(user.getCart());
+			UserDAO userDao = new UserDAO();
+			user = userDao.load(user.getId());
+			userDao.close();
+			CartDAO cartDao = new CartDAO();
+			cartDao.addToCart(product, user);
+			cartDao.close();
 		} else {
 			response.sendError(403);
 			return;

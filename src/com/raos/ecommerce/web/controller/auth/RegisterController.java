@@ -102,9 +102,6 @@ public class RegisterController extends HttpServlet {
 		mailService.setContent(content);
 		mailService.send();
 
-		HttpSession session = request.getSession(true);
-		session.setAttribute("user", user);
-
 		DispatchHelper.dispatch("/WEB-INF/jsp/verification.jsp", request, response);
 	}
 

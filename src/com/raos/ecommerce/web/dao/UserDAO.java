@@ -16,7 +16,6 @@ public class UserDAO extends DAO<User> {
 
 	@SuppressWarnings({ "deprecation" })
 	public User getUserByToken(String uuid) {
-		System.out.println(uuid);
 		return (User) session.createCriteria(User.class).add(Restrictions.eq("token", uuid)).uniqueResult();
 	}
 }

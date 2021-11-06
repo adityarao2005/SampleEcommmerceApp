@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.raos.ecommerce.web.dao.ProductDAO;
 import com.raos.ecommerce.web.dao.UserDAO;
-import com.raos.ecommerce.web.models.Cart;
 import com.raos.ecommerce.web.models.User;
 import com.raos.ecommerce.web.util.DispatchHelper;
 import com.raos.ecommerce.web.util.EncryptHelper;

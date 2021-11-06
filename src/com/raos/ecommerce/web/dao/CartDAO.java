@@ -14,15 +14,18 @@ public class CartDAO extends DAO<Cart> {
 	
 	public void addToCart(Product product, User user) {
 		Objects.requireNonNull(product);
+		
 		// Add the product to the cart if not existing already
-		Cart cart = user.getCart();
-		System.out.println(cart);
+		Cart cart = Objects.requireNonNull(user).getCart();
 		if (cart == null) {
-			user.setCart(cart = new Cart());
-			cart.getProducts().put(product, 1);
-		} else if (cart.getProducts().get(product) != null) {
-			System.out.println("1");
-			cart.getProducts().put(product, cart.getProducts().get(product) + 1);
+			cart = new Cart();
+			user.setCart(cart);
+			session.update(user);
+			session.save(cart);
+		}
+		cart = this.load(cart.getId());
+		if (cart.getProducts().containsKey(product)) {
+			cart.getProducts().replace(product, cart.getProducts().get(product) + 1);
 		} else {
 			cart.getProducts().put(product, 1);
 		}
