@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.raos.ecommerce.web.dao.AddressDAO;
+import com.raos.ecommerce.web.dao.CartDAO;
+import com.raos.ecommerce.web.dao.UserDAO;
 import com.raos.ecommerce.web.models.User;
 import com.raos.ecommerce.web.util.DispatchHelper;
 
@@ -41,10 +44,15 @@ public class OrderPreviewController extends HttpServlet {
 			}
 		}
 		if (user != null) {
-			String cart_id = request.getParameter("cart_id");
-			String address_id = request.getParameter("address_id");
-			request.setAttribute("cart_id", cart_id);
-			request.setAttribute("address_id", address_id);
+			int address_id = Integer.parseInt(request.getParameter("address_id"));
+			try (AddressDAO cartDAO = new AddressDAO()) {
+				request.setAttribute("address", cartDAO.load(address_id));
+			}
+			try (UserDAO userDAO = new UserDAO()) {
+				user = userDAO.load(user.getId());
+				request.setAttribute("cart", user.getCart());
+			}
+			request.setAttribute("products", user.getCart().getProducts());
 			DispatchHelper.dispatch("/WEB-INF/jsp/order-preview.jsp", request, response);
 		}
 	}

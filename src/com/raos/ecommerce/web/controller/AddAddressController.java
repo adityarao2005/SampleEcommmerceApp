@@ -20,36 +20,46 @@ import com.raos.ecommerce.web.util.DispatchHelper;
 @WebServlet("/checkout/add-address")
 public class AddAddressController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddAddressController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AddAddressController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		User user = null;
 		if (session != null && (user = (User) session.getAttribute("user")) != null) {
 			if (user.isAdmin()) {
-				response.sendRedirect("admin");
+				response.sendRedirect("../admin");
 				return;
 			}
 		}
 		if (user != null) {
+			try (UserDAO userDao = new UserDAO()) {
+				user = userDao.load(user.getId());
+			}
+			if (user.getCart() == null || user.getCart().getProducts().isEmpty()) {
+				response.sendRedirect("../");
+			}
 			DispatchHelper.dispatch("/WEB-INF/jsp/add-address.jsp", request, response);
 		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		User user = null;
 		if (session != null && (user = (User) session.getAttribute("user")) != null) {
@@ -65,17 +75,17 @@ public class AddAddressController extends HttpServlet {
 			int streetNo = Integer.parseInt(request.getParameter("street-no"));
 			String street = request.getParameter("street");
 			String zip = request.getParameter("zip");
-			
+
 			Address address = new Address(city, state, street, country, streetNo, zip);
 			try (UserDAO userDao = new UserDAO()) {
 				user = userDao.load(user.getId());
 			}
-			
+
 			try (AddressDAO addressDao = new AddressDAO()) {
 				addressDao.addAddresses(address, user);
 			}
 		}
-		
+
 		response.sendRedirect("addresses");
 	}
 

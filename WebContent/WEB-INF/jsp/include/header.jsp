@@ -22,8 +22,9 @@
 						<li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
 						<li><a href="cart.html"><i class="fa fa-user"></i> My
 								Cart</a></li>
-						<li><a href="checkout.html"><i class="fa fa-user"></i>
+						<li><a href="${pageContext.request.contextPath}/checkout/addresses"><i class="fa fa-user"></i>
 								Checkout</a></li>
+						<li><a href="#"><i class="fa fa-shopping-cart"></i> My Orders</a></li>
 					</ul>
 				</div>
 			</div>

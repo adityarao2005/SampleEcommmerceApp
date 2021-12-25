@@ -11,7 +11,6 @@
 
 	<a href="add-address">Add Address</a>
 	<form action="order-preview" method="post">
-		<input type="hidden" name="cart_id" value="${cart.id}" />
 		<c:forEach var="address" items="${addresses}">
 			<input type='radio' name="address_id" value="${address.id}" />
 			<textarea disabled>${address}</textarea>

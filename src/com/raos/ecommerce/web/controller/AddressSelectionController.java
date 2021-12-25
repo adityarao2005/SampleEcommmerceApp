@@ -45,7 +45,6 @@ public class AddressSelectionController extends HttpServlet {
 		if (user != null) {
 			try (UserDAO dao = new UserDAO()) {
 				user = dao.load(user.getId());
-				request.setAttribute("cart", user.getCart());
 				request.setAttribute("addresses", user.getAddresses());
 			}
 			DispatchHelper.dispatch("/WEB-INF/jsp/addresses.jsp", request, response);

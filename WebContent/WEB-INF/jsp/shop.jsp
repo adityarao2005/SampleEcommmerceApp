@@ -63,7 +63,7 @@
 						<li><a href="${pageContext.request.contextPath}">Home</a></li>
 						<li class="active"><a href="${pageContext.request.contextPath}/shop">Shop page</a></li>
 						<li><a href="cart">Cart</a></li>
-						<li><a href="checkout.html">Checkout</a></li>
+						<li><a href="checkout/addresses">Checkout</a></li>
 						<li><a href="#">Category</a></li>
 						<li><a href="#">Others</a></li>
 						<li><a href="#">Contact</a></li>
