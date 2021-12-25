@@ -8,7 +8,7 @@ import org.hibernate.criterion.Projections;
 
 import com.raos.ecommerce.web.util.DBConnection;
 
-public class DAO<T> {
+public class DAO<T> implements AutoCloseable {
 	protected Session session;
 	protected Transaction transaction;
 	private Class<T> clazz;

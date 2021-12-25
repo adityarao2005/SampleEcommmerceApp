@@ -1,11 +1,12 @@
 package com.raos.ecommerce.web.models;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
@@ -20,12 +21,15 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private boolean active;
-//	@Embedded
 	@OneToOne
 	private Cart cart;
-	private boolean admin;
 	
-	@PrePersist @PreUpdate
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Address> addresses = new LinkedList<>();
+	private boolean admin;
+
+	@PrePersist
+	@PreUpdate
 	public void initUUID() {
 		token = UUID.randomUUID().toString();
 	}
@@ -87,4 +91,11 @@ public class User implements Serializable {
 		this.admin = admin;
 	}
 
+	public List<Address> getAddresses() {
+		return this.addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
 }
